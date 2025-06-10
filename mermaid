@@ -1,0 +1,13 @@
+
+graph TD
+    A[User Device] -->|Secure WS| B[Next.js Frontend]
+    B -->|HTTPS| C[Python MCP Server]
+    C --> D[Local Knowledge Base]
+    C --> E[Blockchain Identity]
+    C --> F[AI Models]
+    D -->|Encrypted Sync| G[Distributed Storage]
+    F --> H[Fine-tuning Pipeline]
+    C -->|MCP Protocol| I[External AI Services]
+    I --> J[Brave Search]
+    I --> K[OpenAI]
+    I --> L[Specialized AIs] 
