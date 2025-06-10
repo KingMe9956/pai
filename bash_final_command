@@ -1,0 +1,4 @@
+
+# Run the ecosystem
+docker-compose up --build -d mcp-server ai-engine blockchain-node
+cd frontend && npm run dev 
