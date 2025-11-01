@@ -1,0 +1,15 @@
+Copyright (c) KingMe9956 All Rights Reserved. 2025
+
+/zk-tools-backend/
+|-- app/
+|   |-- main.py                  # FastAPI app definition
+|   |-- circuits/
+|   |    |-- circom/             # Circom compilation helpers/scripts
+|   |    |-- noir/               # Noir compilation helpers
+|   |    |-- halo2/              # Halo2 tooling orchestration
+|-- models.py                   # Circuit metadata models
+|-- db.py                       # DB connection and persistence
+|-- schemas.py                  # Request/response models
+|-- services/
+|   |-- proof_generator.py      # Proof generation logic
+|-- Dockerfile                  # Container definition for deployment
