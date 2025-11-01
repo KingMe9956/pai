@@ -1,0 +1,60 @@
+name: Main CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        language: [python, node, solidity]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        if: matrix.language == 'python'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        if: matrix.language == 'python'
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run Python tests
+        if: matrix.language == 'python'
+        run: |
+          pytest tests
+
+      - name: Set up Node.js
+        if: matrix.language == 'node'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Node.js dependencies
+        if: matrix.language == 'node'
+        run: |
+          npm ci
+
+      - name: Run TypeScript lint/tests
+        if: matrix.language == 'node'
+        run: |
+          npm run lint
+          npm test
+
+      - name: Install Solidity tools
+        if: matrix.language == 'solidity'
+        run: |
+          npm install -g solhint
+          npm install
+
+      - name: Lint Solidity contracts
+        if: matrix.language == 'solidity'
+        run: |
+          solhint 'contracts/**/*.sol'
