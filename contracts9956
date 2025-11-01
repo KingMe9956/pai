@@ -1,1 +1,101 @@
 Copyright (c) KingMe9956 All Rights Reserved. 2025
+
+
+// SPDX-License-Identifier: Proprietary
+// © 2025 KingMe9956 | All Rights Reserved
+// License: KingMe9956 Commercial License. See LICENSE in repo root.
+
+/**
+ * @title CustomWorkflow
+ * @dev Extensible multi-step workflow contract for on-chain process automation, configurable in every direction.
+ * This template is intended for secure, auditable business or DAO flows, onboarding, DeFi approvals, or compliance.
+ * Each workflow step can hold state, emit events, and offer role-based branching.
+ */
+pragma solidity ^0.8.21;
+
+contract CustomWorkflow {
+    address public immutable owner;
+    uint256 public workflowId;
+    enum Step { Unstarted, Step1, Step2, Step3, Step4, Step5, Finished }
+
+    mapping(address => Step) public userStep;
+    mapping(address => string[5]) public userSelections; // Tracks user option choices per step
+
+    event StepStarted(address indexed user, uint indexed step, string option);
+    event StepCompleted(address indexed user, uint indexed step, string option);
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not contract owner");
+        _;
+    }
+
+    constructor(uint256 _workflowId) {
+        owner = msg.sender;
+        workflowId = _workflowId;
+    }
+
+    // Customizable step actions
+    function startWorkflow(string calldata option1) public {
+        require(userStep[msg.sender] == Step.Unstarted, "Already started");
+        userStep[msg.sender] = Step.Step1;
+        userSelections[msg.sender][0] = option1;
+        emit StepStarted(msg.sender, 1, option1);
+    }
+
+    function advanceStep2(string calldata option2) public {
+        require(userStep[msg.sender] == Step.Step1, "Step1 not completed");
+        userStep[msg.sender] = Step.Step2;
+        userSelections[msg.sender][1] = option2;
+        emit StepCompleted(msg.sender, 1, userSelections[msg.sender][0]);
+        emit StepStarted(msg.sender, 2, option2);
+    }
+
+    function advanceStep3(string calldata option3) public {
+        require(userStep[msg.sender] == Step.Step2, "Step2 not completed");
+        userStep[msg.sender] = Step.Step3;
+        userSelections[msg.sender][2] = option3;
+        emit StepCompleted(msg.sender, 2, userSelections[msg.sender][1]);
+        emit StepStarted(msg.sender, 3, option3);
+    }
+
+    function advanceStep4(string calldata option4) public {
+        require(userStep[msg.sender] == Step.Step3, "Step3 not completed");
+        userStep[msg.sender] = Step.Step4;
+        userSelections[msg.sender][3] = option4;
+        emit StepCompleted(msg.sender, 3, userSelections[msg.sender][2]);
+        emit StepStarted(msg.sender, 4, option4);
+    }
+
+    function advanceStep5(string calldata option5) public {
+        require(userStep[msg.sender] == Step.Step4, "Step4 not completed");
+        userStep[msg.sender] = Step.Step5;
+        userSelections[msg.sender][4] = option5;
+        emit StepCompleted(msg.sender, 4, userSelections[msg.sender][3]);
+        emit StepStarted(msg.sender, 5, option5);
+    }
+
+    function finishWorkflow() public {
+        require(userStep[msg.sender] == Step.Step5, "Must finish all steps");
+        userStep[msg.sender] = Step.Finished;
+        emit StepCompleted(msg.sender, 5, userSelections[msg.sender][4]);
+    }
+
+    // EXTENSION POINTS BELOW
+
+    // 1. Role-based step branching (e.g., only DAO members can go to Step4)
+    // 2. On-chain plugin slots (call hooks, interfaces, or other contracts)
+    // 3. Auditable on-chain data (verifiable memory for compliance/workflow)
+    // 4. Events for off-chain integration or frontend triggers
+    // 5. Customizable step count: change enum/add functions for longer/shorter flows
+
+    // Owner controls/automation example
+    function resetUser(address user) public onlyOwner {
+        userStep[user] = Step.Unstarted;
+        delete userSelections[user];
+    }
+
+    // Return full user workflow history for API or audit
+    function getUserWorkflow(address user) public view returns (string[5] memory steps, Step lastStep) {
+        return (userSelections[user], userStep[user]);
+    }
+}
