@@ -1,0 +1,20 @@
+Copyright (c) KingMe9956 All Rights Reserved 2025
+
+# Testing & Quality Assurance
+
+## Automated Tests
+
+- Run Python tests: `pytest tests/`
+- Run TypeScript tests: `npm test` in `/ui`
+- Smart contract testing: `truffle test` or `hardhat test`
+
+## Coverage & CI/CD
+
+- Code must pass automated CI on every PR.
+- Aim for >80% test coverage in critical business logic.
+
+## Manual QA
+- Use provided test scenarios for end-to-end review.
+- Document usability and regression tests in this file or `/tests`.
+
+See workflow in `.github/workflows/ci.yml`.
