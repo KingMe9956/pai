@@ -1,0 +1,59 @@
+Copyright (c) KingMe9956 All Rights Reserved 2025
+
+from fastapi import FastAPI, UploadFile, File, HTTPException
+import subprocess
+import uuid
+import os
+
+app = FastAPI()
+
+TMP_DIR = "/tmp/zk_service"
+
+if not os.path.exists(TMP_DIR):
+    os.makedirs(TMP_DIR)
+
+@app.post("/compile/circom")
+async def compile_circom(file: UploadFile = File(...)):
+    file_id = str(uuid.uuid4())
+    circuit_path = os.path.join(TMP_DIR, f"{file_id}.circom")
+    with open(circuit_path, "wb") as f:
+        f.write(await file.read())
+
+    command = ["circom", circuit_path, "--r1cs", "--wasm", "--sym", "-o", TMP_DIR]
+
+    try:
+        subprocess.run(command, check=True)
+    except subprocess.CalledProcessError as e:
+        raise HTTPException(status_code=500, detail=f"Compilation failed: {str(e)}")
+
+    r1cs_file = os.path.join(TMP_DIR, f"{file_id}.r1cs")
+    wasm_file = os.path.join(TMP_DIR, f"{file_id}_js", "circuit.wasm")
+
+    if not os.path.exists(r1cs_file) or not os.path.exists(wasm_file):
+        raise HTTPException(status_code=500, detail="Output files missing after compilation")
+
+    return {
+        "message": "Circuit compiled successfully",
+        "r1cs_file": r1cs_file,
+        "wasm_file": wasm_file
+    }
+
+@app.post("/generate-proof/circom")
+async def generate_proof_circom(circuit_id: str, witness_input: dict):
+    # Assumes circuit compiled as above, witness input file generated
+    witness_path = os.path.join(TMP_DIR, f"{circuit_id}_witness.json")
+    with open(witness_path, "w") as f:
+        import json
+        json.dump(witness_input, f)
+
+    # Run witness computation and proof generation via snarkjs (example)
+    try:
+        # Example shell commands here:
+        # snarkjs wtns calculate circuit.wasm witness.json witness.wtns
+        # snarkjs groth16 prove circuit_final.zkey witness.wtns proof.json public.json
+
+        pass  # Implement subprocess calls here: adapted for your artifact paths
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Proof generation failed: {str(e)}")
+
+    return {"message": "Proof generated successfully", "proof_path": "<path-to-proof>"}
