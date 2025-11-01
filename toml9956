@@ -1,0 +1,5 @@
+Copyright  (c) KingMe9956 All Rights Reserved 2025
+
+[dependencies]
+halo2_proofs = "0.1"  # Use the latest version
+halo2_gadgets = "0.1"
