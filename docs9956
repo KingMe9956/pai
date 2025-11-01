@@ -1,1 +1,16 @@
 Copyright (c) KingMe9956 All Rights Reserved. 2025
+
+/docs
+  ├── index.md                   # Main documentation landing page (overview, navigation)
+  ├── getting-started.md         # Quickstart guide for setup and first use
+  ├── architecture.md            # System design, technologies used, module breakdown
+  ├── templates.md               # Documentation on creating, customizing, and publishing UI templates
+  ├── integrations.md            # Guide to integrating with wallets, APIs, analytics, and other platforms
+  ├── testing.md                 # Testing strategy, running tests, and test coverage
+  ├── security.md                # Security practices, threat model, vulnerability reporting
+  ├── faq.md                     # Frequently Asked Questions for users and clients
+  ├── pricing.md                 # Transparent pricing philosophy and commercial model
+  ├── contributing.md            # Contributor guidelines (symlink or detail from root CONTRIBUTING.md)
+  ├── changelog.md               # Project’s historic changelog (symlink from root, or summary here)
+  ├── roadmap.md                 # Feature roadmap, upcoming releases, future vision
+  └── contact.md                 # Support, business, and commercial inquiry contacts
