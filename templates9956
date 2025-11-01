@@ -16,6 +16,6 @@ Templates enable rapid UX, dashboard, and workflow customization.
 - Business users may monetize or license premium templates
 
 ## Example: Analytics Dashboard
-- How to clone, customize, and deploy for commercial use
+- How to clone, customize, and deploy for commercial use.
 
 See [architecture.md](architecture.md) for integration hooks.
