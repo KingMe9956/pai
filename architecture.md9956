@@ -1,0 +1,22 @@
+Copyright (c) KingMe9956 All Rights Reserved 2025
+
+# Architecture Overview
+
+## System Layers
+
+- **Core Engine (Python):** Manages AI logic, workflow, and integrations.
+- **UI/Frontend (TypeScript/React):** User and admin dashboards, customizable templates.
+- **Smart Contracts (Solidity):** Permissioning, payments, and on-chain logic.
+- **Integrations Layer:** Connects to wallets, APIs, analytics, and SaaS partners.
+
+## Example Deployment
+
+- [architecture.svg/png] (Include deployment diagram)
+- Cloud, on-prem/offline, and hybrid supported.
+
+## Extending PAI
+
+- Module system for new automations and UI templates.
+- REST, GraphQL, and Web3 APIs available for integration.
+
+See [templates.md](templates.md) for UI extensibility.
