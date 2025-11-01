@@ -1,0 +1,5 @@
+Copyright (c) KingMe9956 All Rights Reserved 2025
+
+npx create-react-app zk-dashboard --template typescript
+cd zk-dashboard
+npm start
