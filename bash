@@ -29,3 +29,25 @@ cargo install noir-lang
 '''Alternatively, use Docker containers if prefer sandboxed installs.'''
 
 
+
+# Rust toolchain (if needed)
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# Circom
+git clone https://github.com/iden3/circom.git
+cd circom
+cargo build --release
+cargo install --path circom
+
+# Node.js & snarkjs
+# Install latest Node.js from official sources, then:
+npm install -g snarkjs@latest
+
+# Noir
+cargo install noir-lang
+
+# Python backend
+pip install fastapi uvicorn
+
+# React frontend (TypeScript template)
+npx create-react-app zk-dashboard --template typescript
