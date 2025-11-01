@@ -1,0 +1,105 @@
+Copyright (c) KingMe9956 All Rights Reserved 2025
+
+/*
+© 2025 KingMe9956 | All Rights Reserved
+License: KingMe9956 Commercial License. See LICENSE in repo root.
+*/
+
+import React, { useState } from 'react';
+
+// --- Step options/extensibility definition (edit to add more flows or options) ---
+const stepOptions = [
+  {
+    label: "Start",
+    choices: [
+      { value: "create_account", label: "Create Account" },
+      { value: "import_data", label: "Import Data" },
+      { value: "connect_wallet", label: "Connect Wallet" }
+    ]
+  },
+  {
+    label: "Configure",
+    choices: [
+      { value: "set_preferences", label: "Set Preferences" },
+      { value: "choose_template", label: "Choose Template" },
+      { value: "select_theme", label: "Select Theme" }
+    ]
+  },
+  {
+    label: "Integrate",
+    choices: [
+      { value: "add_plugin", label: "Add Plugin" },
+      { value: "connect_api", label: "Connect API" },
+      { value: "setup_notifications", label: "Setup Notifications" }
+    ]
+  },
+  {
+    label: "Review",
+    choices: [
+      { value: "test_workflow", label: "Test Workflow" },
+      { value: "view_summary", label: "View Summary" },
+      { value: "fix_issues", label: "Fix Issues" }
+    ]
+  },
+  {
+    label: "Finish",
+    choices: [
+      { value: "deploy", label: "Deploy" },
+      { value: "export_config", label: "Export Config" },
+      { value: "share", label: "Share" }
+    ]
+  },
+];
+
+// --- Core component ---
+const CustomWorkflowTemplate: React.FC = () => {
+  const [selections, setSelections] = useState(Array(stepOptions.length).fill(null));
+
+  // Handle select
+  const handleSelect = (stepIdx: number, value: string) => {
+    const next = [...selections];
+    next[stepIdx] = value;
+    setSelections(next);
+  };
+
+  return (
+    <div style={{ padding: 32, maxWidth: 600, margin: '0 auto', fontFamily: 'sans-serif' }}>
+      <h2>Custom Multi-Step Workflow</h2>
+      <ol>
+        {stepOptions.map((step, idx) => (
+          <li key={step.label} style={{ margin: '24px 0' }}>
+            <span style={{ fontWeight: 600 }}>{step.label}</span>
+            <div style={{ marginTop: 8, marginLeft: 16 }}>
+              <select
+                value={selections[idx] || ''}
+                onChange={e => handleSelect(idx, e.target.value)}
+                onBlur={e => handleSelect(idx, e.target.value)}
+              >
+                <option value="" hidden>Select...</option>
+                {step.choices.map(opt => (
+                  <option value={opt.value} key={opt.value}>{opt.label}</option>
+                ))}
+              </select>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <div style={{ marginTop: 32, padding: 16, background: "#f9f9f9", borderRadius: 8 }}>
+        <h4>Selected Steps</h4>
+        <ol>
+          {selections.map((sel, i) => (
+            <li key={i}>
+              {sel
+                ? (stepOptions[i].choices.find(opt => opt.value === sel)?.label || sel)
+                : <span style={{ color: "#aaa" }}>Not selected</span>
+              }
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  );
+};
+
+export default CustomWorkflowTemplate;
