@@ -1,0 +1,16 @@
+Copyright (c) KingMe9956 All Rights Reserved 2025
+
+# Security Guide
+
+## Key Practices
+
+- Use environment variables for secrets—you must NEVER commit sensitive keys.
+- Dependabot and regular `pip audit`/`npm audit` runs for dependencies.
+- All wallet and payment flows require multi-factor authentication (MFA).
+
+## Vulnerability Disclosure
+
+- Report any security flaws privately to [Your Secure Contact Email].
+- Critical security issues may be eligible for rewards.
+
+Follow best OWASP and blockchain-specific standards.
