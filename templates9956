@@ -1,1 +1,21 @@
 Copyright (c) KingMe9956 All Rights Reserved. 2025
+
+# Building & Customizing Templates
+
+Templates enable rapid UX, dashboard, and workflow customization.
+
+## Creating a Template
+
+- Fork `/ui/templates/example-template`
+- Modify TypeScript/React files and assets
+- Document your template’s features and intended use
+
+## Sharing & Publishing
+
+- Submit via PR or internal upload dashboard (when available)
+- Business users may monetize or license premium templates
+
+## Example: Analytics Dashboard
+- How to clone, customize, and deploy for commercial use
+
+See [architecture.md](architecture.md) for integration hooks.
